@@ -46,8 +46,10 @@ class Playground extends Container {
   updateField(shape, pos) {
     shape.forEach((rowData, row) => {
       rowData.forEach((colData, col) => {
-        console.warn(pos.row + row, pos.col + col);
-        this.field[pos.row + row][pos.col + col] = shape[row][col];
+        let shapeData = shape[row][col];
+        if(shapeData === 1) {
+          this.field[pos.row + row][pos.col + col] = shape[row][col];
+        }
       });
     });
   }
