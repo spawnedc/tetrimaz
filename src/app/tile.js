@@ -1,12 +1,12 @@
 import {Container, Sprite} from 'pixi.js';
-const BLOCK_WIDTH = 30;
-const BLOCK_HEIGHT = 30;
+import {TILE_SIZE} from './tile-data.js';
 
 class Tile extends Container {
   constructor(tileData, texture) {
     super();
     this.shape = tileData;
     this.texture = texture;
+    this.pos = {row: 0, col: 0};
     this.setup();
   }
 
@@ -23,12 +23,32 @@ class Tile extends Container {
         let colData = rowData[col];
         if (colData === 1) {
           let block = new Sprite(this.texture);
-          block.x = col * BLOCK_WIDTH;
-          block.y = row * BLOCK_HEIGHT;
+          block.x = col * TILE_SIZE;
+          block.y = row * TILE_SIZE;
           this.addChild(block);
         }
       }
     }
+  }
+
+  moveDown() {
+    this.pos.row++;
+    this._move();
+  }
+
+  moveLeft() {
+    this.pos.col--;
+    this._move();
+  }
+
+  moveRight() {
+    this.pos.col++;
+    this._move();
+  }
+
+  _move() {
+    this.x = this.pos.col * TILE_SIZE;
+    this.y = this.pos.row * TILE_SIZE;
   }
 }
 
