@@ -8,8 +8,8 @@ class Playground extends Container {
     this.field = [];
     for(let row = 0; row < rows; ++row) {
       this.field[row] = [];
-      for(let cols = 0; cols < cols; ++cols) {
-        this.field[row][cols] = 0;
+      for(let col = 0; col < cols; ++col) {
+        this.field[row][col] = 0;
       }
     }
 
