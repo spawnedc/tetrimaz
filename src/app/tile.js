@@ -4,13 +4,15 @@ import {TILE_SIZE} from './tile-data.js';
 class Tile extends Container {
   constructor(tileData, texture) {
     super();
-    this.shape = tileData;
     this.texture = texture;
     this.pos = {row: 0, col: 0};
-    this.setup();
+    this.rotationData = tileData;
+    this.rotationIndex = 0;
+    this.setShape();
   }
 
-  setup() {
+  render() {
+    this.removeChildren();
     this.totalRows = this.shape.length;
     this.totalCols = 0;
 
@@ -29,6 +31,44 @@ class Tile extends Container {
         }
       }
     }
+  }
+
+  setShape(index) {
+    this.rotationIndex = index;
+    this.shape = this.rotationData[this.rotationIndex];
+    this.render();
+  }
+
+  rotateCW() {
+    let {rotationIndex} = this.getRotatedShapeCW();
+    this.setShape(rotationIndex);
+  }
+
+  rotateCCW() {
+    let {rotationIndex} = this.getRotatedShapeCCW();
+    this.setShape(rotationIndex);
+  }
+
+  getRotatedShapeCW() {
+    let rotationIndex = this.rotationIndex + 1;
+    if(rotationIndex === this.rotationData.length) {
+      rotationIndex = 0;
+    }
+
+    let shape = this.rotationData[rotationIndex];
+
+    return {rotationIndex, shape};
+  }
+
+  getRotatedShapeCCW() {
+    let rotationIndex = this.rotationIndex - 1;
+    if(rotationIndex < 0) {
+      rotationIndex = this.rotationData.length - 1;
+    }
+
+    let shape = this.rotationData[rotationIndex];
+
+    return {rotationIndex, shape};
   }
 
   moveDown() {

@@ -66,6 +66,22 @@ class Game {
       }
     };
 
+    this.km.up.onKeyDown = () => {
+      let {shape} = this.tile.getRotatedShapeCW();
+      let canMoveToPos = this.playground.canMoveToPos(shape, this.tile.pos);
+      if(canMoveToPos) {
+        this.tile.rotateCW();
+      }
+    };
+
+    this.km.down.onKeyDown = () => {
+      let {shape} = this.tile.getRotatedShapeCCW();
+      let canMoveToPos = this.playground.canMoveToPos(shape, this.tile.pos);
+      if(canMoveToPos) {
+        this.tile.rotateCCW();
+      }
+    };
+
     this.state = this.play;
 
     this.ticker = new PIXI.ticker.Ticker();
