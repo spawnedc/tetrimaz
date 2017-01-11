@@ -8,7 +8,7 @@ class Tile extends Container {
     this.pos = {row: 0, col: 0};
     this.rotationData = tileData;
     this.rotationIndex = 0;
-    this.setShape();
+    this.setShape(this.rotationIndex);
   }
 
   render() {
