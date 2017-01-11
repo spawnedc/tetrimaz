@@ -45,23 +45,42 @@ class Game {
     this.stage.addChild(this.tile);
 
     this.km.left.onKeyDown = () => {
-      this.tile.x -= TILE_SIZE;
+      let potentialPos = {
+        row: this.tile.pos.row,
+        col: this.tile.pos.col - 1
+      };
+      let canMoveToPos = this.playground.canMoveToPos(this.tile.shape, potentialPos);
+      if(canMoveToPos) {
+        this.tile.moveLeft();
+      }
     };
 
     this.km.right.onKeyDown = () => {
-      this.tile.x += TILE_SIZE;
+      let potentialPos = {
+        row: this.tile.pos.row,
+        col: this.tile.pos.col + 1
+      };
+      let canMoveToPos = this.playground.canMoveToPos(this.tile.shape, potentialPos);
+      if(canMoveToPos) {
+        this.tile.moveRight();
+      }
     };
 
     this.state = this.play;
 
     this.ticker = new PIXI.ticker.Ticker();
     this.ticker.add(() => {
-      let bounds = this.tile.getBounds();
-      if (bounds.bottom >= this.playground.height) {
+      let potentialPos = {
+        row: this.tile.pos.row + 1,
+        col: this.tile.pos.col
+      };
+      let canMoveToPos = this.playground.canMoveToPos(this.tile.shape, potentialPos);
+      if(canMoveToPos) {
+        this.tile.moveDown();
+      } else {
+        this.playground.updateField(this.tile.shape, this.tile.pos);
         this.tile = this.tm.getRandomTile();
         this.stage.addChild(this.tile);
-      } else {
-        this.tile.y += TILE_SIZE;
       }
     });
 

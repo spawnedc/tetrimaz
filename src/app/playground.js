@@ -19,6 +19,38 @@ class Playground extends Container {
 
     this.addChild(this.visiblePG);
   }
+
+  canMoveToPos(shape, potentialPos) {
+    let canMove = true;
+    shape.forEach((rowData, row) => {
+      rowData.forEach((colData, col) => {
+        let shapeData = shape[row][col];
+        if(shapeData === 1) {
+          if(potentialPos.row + row >= this.field.length) {
+            // Tile hit the ground
+            canMove = false;
+          } else if(potentialPos.col + col < 0 || potentialPos.col + col >= this.field[potentialPos.row + row].length) {
+            // Tile hit the left or right boundaries
+            canMove = false;
+          } else if(this.field[potentialPos.row + row][potentialPos.col + col] === 1) {
+            // Tile hit occupied space
+            canMove = false;
+          }
+        }
+      })
+    });
+
+    return canMove;
+  }
+
+  updateField(shape, pos) {
+    shape.forEach((rowData, row) => {
+      rowData.forEach((colData, col) => {
+        console.warn(pos.row + row, pos.col + col);
+        this.field[pos.row + row][pos.col + col] = shape[row][col];
+      });
+    });
+  }
 }
 
 export {Playground};
