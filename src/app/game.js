@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import {ASSETS} from './config.js';
-import {TileManager} from './tile-manager.js';
+import {TileManager} from './tiles/tile-manager.js';
 import {KeyboardManager} from './keyboard-manager.js';
 import {Playground} from './playground.js';
-import {TILE_SIZE} from './tile-data.js';
+import {TILE_SIZE} from './tiles/tile-data.js';
 import {PLAY_AREA, DEFAULT_SPEED} from './constants.js';
 
 

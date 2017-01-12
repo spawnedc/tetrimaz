@@ -1,8 +1,8 @@
 import {Texture, BaseTexture, Rectangle} from 'pixi.js';
 import {tilesData, TILE_SIZE, NUM_TILES} from './tile-data.js';
-import {ASSETS} from './config.js';
+import {ASSETS} from '../config.js';
 import {Tile} from './tile.js';
-import {randomInt} from './utils.js';
+import {randomInt} from '../utils.js';
 
 class TileManager {
   constructor() {}
