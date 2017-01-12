@@ -26,6 +26,8 @@ class PlayState extends BaseState {
       this.tile.moveDown();
     } else {
       this.playground.updateField(this.tile.shape, this.tile.pos);
+      this.stage.removeChild(this.tile);
+      this.playground.checkForClearedLines();
       this.tile = this.tm.getRandomTile();
       this.stage.addChild(this.tile);
     }
