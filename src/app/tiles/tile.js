@@ -39,30 +39,16 @@ class Tile extends Container {
     this.render();
   }
 
-  rotateCW() {
-    let {rotationIndex} = this.getRotatedShapeCW();
+  rotate(direction) {
+    let {rotationIndex} = this.getRotatedShape(direction);
     this.setShape(rotationIndex);
   }
 
-  rotateCCW() {
-    let {rotationIndex} = this.getRotatedShapeCCW();
-    this.setShape(rotationIndex);
-  }
-
-  getRotatedShapeCW() {
-    let rotationIndex = this.rotationIndex + 1;
+  getRotatedShape(direction) {
+    let rotationIndex = this.rotationIndex + direction;
     if(rotationIndex === this.rotationData.length) {
       rotationIndex = 0;
-    }
-
-    let shape = this.rotationData[rotationIndex];
-
-    return {rotationIndex, shape};
-  }
-
-  getRotatedShapeCCW() {
-    let rotationIndex = this.rotationIndex - 1;
-    if(rotationIndex < 0) {
+    } else if(rotationIndex < 0) {
       rotationIndex = this.rotationData.length - 1;
     }
 
@@ -76,13 +62,8 @@ class Tile extends Container {
     this._move();
   }
 
-  moveLeft() {
-    this.pos.col--;
-    this._move();
-  }
-
-  moveRight() {
-    this.pos.col++;
+  moveHorizontal(direction) {
+    this.pos.col += direction;
     this._move();
   }
 

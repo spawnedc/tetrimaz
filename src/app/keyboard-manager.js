@@ -1,9 +1,11 @@
+import {KEYS} from './constants.js';
+
 class KeyboardManager {
   constructor() {
-    this.left = this.setupKey(37);
-    this.up = this.setupKey(38);
-    this.right = this.setupKey(39);
-    this.down = this.setupKey(40);
+    this.left = this.setupKey(KEYS.LEFT);
+    this.up = this.setupKey(KEYS.UP);
+    this.right = this.setupKey(KEYS.RIGHT);
+    this.down = this.setupKey(KEYS.DOWN);
   }
 
   setupKey(keyCode) {
@@ -16,7 +18,7 @@ class KeyboardManager {
       onKeyDownHandler: (event) => {
         if (event.keyCode === key.code) {
           if (key.isUp && key.onKeyDown) {
-            key.onKeyDown();
+            key.onKeyDown(key.code);
           }
           key.isDown = true;
           key.isUp = false;
@@ -26,7 +28,7 @@ class KeyboardManager {
       onKeyUpHandler: (event) => {
         if (event.keyCode === key.code) {
           if (key.isDown && key.onKeyUp) {
-            key.onKeyUp();
+            key.onKeyUp(key.code);
           }
           key.isDown = false;
           key.isUp = true;
