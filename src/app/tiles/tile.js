@@ -23,7 +23,7 @@ class Tile extends Container {
       }
       for (let col = 0; col < rowData.length; ++col) {
         let colData = rowData[col];
-        if (colData === 1) {
+        if (colData !== 0) {
           let block = new Sprite(this.texture);
           block.x = col * TILE_SIZE;
           block.y = row * TILE_SIZE;

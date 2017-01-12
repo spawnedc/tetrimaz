@@ -30,14 +30,14 @@ class Playground extends Container {
     shape.forEach((rowData, row) => {
       rowData.forEach((colData, col) => {
         let shapeData = shape[row][col];
-        if(shapeData === 1) {
+        if(shapeData !== 0) {
           if(potentialPos.row + row >= this.field.length) {
             // Tile hit the ground
             canMove = false;
           } else if(potentialPos.col + col < 0 || potentialPos.col + col >= this.field[potentialPos.row + row].length) {
             // Tile hit the left or right boundaries
             canMove = false;
-          } else if(this.field[potentialPos.row + row][potentialPos.col + col] === 1) {
+          } else if(this.field[potentialPos.row + row][potentialPos.col + col] !== 0) {
             // Tile hit occupied space
             canMove = false;
           }
@@ -52,7 +52,7 @@ class Playground extends Container {
     shape.forEach((rowData, row) => {
       rowData.forEach((colData, col) => {
         let shapeData = shape[row][col];
-        if(shapeData === 1) {
+        if(shapeData !== 0) {
           this.field[pos.row + row][pos.col + col] = shape[row][col];
         }
       });
