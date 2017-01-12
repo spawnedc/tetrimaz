@@ -14,9 +14,7 @@ class PlayState extends BaseState {
     this.renderables.push(this.tile);
   }
 
-  loop() {
-    console.info('loop');
-  }
+  loop() {}
 
   tick() {
     let potentialPos = {
