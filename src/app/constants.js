@@ -5,4 +5,11 @@ const PLAY_AREA = {
 
 const DEFAULT_SPEED = 500;
 
-export {PLAY_AREA, DEFAULT_SPEED};
+const KEYS = {
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40
+};
+
+export {PLAY_AREA, DEFAULT_SPEED, KEYS};
