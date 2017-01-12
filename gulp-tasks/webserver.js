@@ -1,4 +1,3 @@
-import gulp from 'gulp';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import webpackConfig from '../webpack.config';
@@ -13,7 +12,7 @@ module.exports = function() {
       chunks: false,
       colors: true
     }
-  }).listen(8000, 'localhost', function (err, result) {
+  }).listen(8000, 'localhost', function (err) {
     if (err) {
       console.log(err);
     }
