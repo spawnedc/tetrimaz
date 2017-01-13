@@ -3,6 +3,7 @@ import {PIXIContainer} from './container.js';
 import {PIXIGraphics} from './graphics.js';
 import {PIXISprite} from './sprite.js';
 import {PIXITexture} from './texture.js';
+import {PIXIRectangle} from './rectangle.js';
 
 class PIXIAdapter {
   constructor() {
@@ -11,7 +12,7 @@ class PIXIAdapter {
     this.Sprite = PIXISprite;
     this.Texture = PIXITexture;
     this.Ticker = PIXI.ticker.Ticker;
-    this.Rectangle = PIXI.Rectangle;
+    this.Rectangle = PIXIRectangle;
   }
 
   getRenderer(canvas, width, height) {

@@ -16,7 +16,7 @@ class TileManager {
     let tileData = tilesData[idx];
     let texture = new ENGINE.Texture(ASSETS.BLOCKS);
     let xPos = (idx % NUM_TILES) * TILE_SIZE;
-    texture.frame = new ENGINE.Rectangle(xPos, 0, TILE_SIZE, TILE_SIZE);
+    texture.frame = new ENGINE.Rectangle(xPos, 0, TILE_SIZE, TILE_SIZE).rectangle;
     return new Tile(tileData, texture);
   }
 }
