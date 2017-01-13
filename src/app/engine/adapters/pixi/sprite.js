@@ -2,7 +2,7 @@ import {Sprite} from 'pixi.js';
 
 class PIXISprite {
   constructor(texture) {
-    this.container = new Sprite(texture);
+    this.container = new Sprite(texture.texture);
   }
 
   get x() {

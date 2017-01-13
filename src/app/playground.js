@@ -71,7 +71,7 @@ class Playground {
     let texture = new ENGINE.Texture(ASSETS.BLOCKS);
     let xPos = ((idx - 1) % NUM_TILES) * TILE_SIZE;
     texture.frame = new ENGINE.Rectangle(xPos, 0, TILE_SIZE, TILE_SIZE);
-    let block = new ENGINE.Sprite(texture.texture);
+    let block = new ENGINE.Sprite(texture);
     block.x = col * TILE_SIZE;
     block.y = row * TILE_SIZE;
     // This is for easier row cleaning
