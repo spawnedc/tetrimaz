@@ -1,9 +1,10 @@
-import * as PIXI from 'pixi.js';
+import {autoDetectRenderer, loader} from 'pixi.js';
 import {PIXIContainer} from './container.js';
 import {PIXIGraphics} from './graphics.js';
 import {PIXISprite} from './sprite.js';
 import {PIXITexture} from './texture.js';
 import {PIXIRectangle} from './rectangle.js';
+import {PIXITicker} from './ticker.js';
 
 class PIXIAdapter {
   constructor() {
@@ -11,12 +12,12 @@ class PIXIAdapter {
     this.Graphics = PIXIGraphics;
     this.Sprite = PIXISprite;
     this.Texture = PIXITexture;
-    this.Ticker = PIXI.ticker.Ticker;
+    this.Ticker = PIXITicker;
     this.Rectangle = PIXIRectangle;
   }
 
   getRenderer(canvas, width, height) {
-    let renderer = PIXI.autoDetectRenderer(width, height, {
+    let renderer = autoDetectRenderer(width, height, {
       resolution: 1,
       view: canvas
     });
@@ -30,7 +31,6 @@ class PIXIAdapter {
   }
 
   preload(assets) {
-    let loader = PIXI.loader;
     return new Promise((resolve, reject) => {
       loader
         .add(assets)
