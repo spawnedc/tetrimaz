@@ -1,9 +1,9 @@
-import {Container, Sprite} from 'pixi.js';
 import {TILE_SIZE} from './tile-data.js';
+import {ENGINE} from '../engine/engine.js';
 
-class Tile extends Container {
+class Tile {
   constructor(tileData, texture) {
-    super();
+    this.container = new ENGINE.Container();
     this.texture = texture;
     this.pos = {row: 0, col: 0};
     this.rotationData = tileData;
@@ -12,7 +12,7 @@ class Tile extends Container {
   }
 
   render() {
-    this.removeChildren();
+    this.container.removeChildren();
     this.totalRows = this.shape.length;
     this.totalCols = 0;
 
@@ -24,10 +24,10 @@ class Tile extends Container {
       for (let col = 0; col < rowData.length; ++col) {
         let colData = rowData[col];
         if (colData !== 0) {
-          let block = new Sprite(this.texture);
+          let block = new ENGINE.Sprite(this.texture);
           block.x = col * TILE_SIZE;
           block.y = row * TILE_SIZE;
-          this.addChild(block);
+          this.container.addChild(block);
         }
       }
     }
@@ -68,8 +68,8 @@ class Tile extends Container {
   }
 
   _move() {
-    this.x = this.pos.col * TILE_SIZE;
-    this.y = this.pos.row * TILE_SIZE;
+    this.container.x = this.pos.col * TILE_SIZE;
+    this.container.y = this.pos.row * TILE_SIZE;
   }
 }
 

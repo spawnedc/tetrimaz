@@ -1,24 +1,25 @@
-import {Container, Rectangle, Graphics, Sprite, BaseTexture, Texture} from 'pixi.js';
 import {TILE_SIZE, NUM_TILES} from './tiles/tile-data.js';
 import {ASSETS} from './config.js';
+import {ENGINE} from './engine/engine.js';
 
-class Playground extends Container {
+class Playground {
   constructor(rows, cols, tileSize) {
-    super();
+
+    this.container = new ENGINE.Container();
 
     this.numCols = cols;
     this.numRows = rows;
 
-    this.playground = new Rectangle(0, 0, tileSize * this.numCols, tileSize * this.numRows);
+    this.playground = new ENGINE.Rectangle(0, 0, tileSize * this.numCols, tileSize * this.numRows);
 
     this.field = this.createField();
     this.blocks = [];
 
-    this.visiblePG = new Graphics();
+    this.visiblePG = new ENGINE.Graphics();
     this.visiblePG.beginFill(0xFFFF00);
     this.visiblePG.drawRect(0, 0, this.playground.width, this.playground.height);
 
-    this.addChild(this.visiblePG);
+    this.container.addChild(this.visiblePG);
   }
 
   createField() {
@@ -67,16 +68,16 @@ class Playground extends Container {
   }
 
   renderBlock(idx, row, col) {
-    let texture = new Texture(BaseTexture.fromImage(ASSETS.BLOCKS));
+    let texture = new ENGINE.Texture(ASSETS.BLOCKS);
     let xPos = ((idx - 1) % NUM_TILES) * TILE_SIZE;
-    texture.frame = new Rectangle(xPos, 0, TILE_SIZE, TILE_SIZE);
-    let block = new Sprite(texture);
+    texture.frame = new ENGINE.Rectangle(xPos, 0, TILE_SIZE, TILE_SIZE);
+    let block = new ENGINE.Sprite(texture.texture);
     block.x = col * TILE_SIZE;
     block.y = row * TILE_SIZE;
     // This is for easier row cleaning
     block.row = row;
     this.blocks.push(block);
-    this.addChild(block);
+    this.container.addChild(block);
   }
 
   checkForClearedLines() {
@@ -95,21 +96,13 @@ class Playground extends Container {
   }
 
   clearRow(rowIndex) {
-    let blocksToClear = this.blocks.filter((block) => {
-      return block.row === rowIndex;
-    });
-
-    blocksToClear.forEach((block) => {
-      this.removeChild(block);
-    });
-
     this.field.splice(rowIndex, 1);
     this.field.unshift(new Array(this.numCols).fill(0));
     this.reRender();
   }
 
   reRender() {
-    this.blocks.forEach((block) => this.removeChild(block));
+    this.container.removeChild(...this.blocks);
     this.field.forEach((row, rowIndex) => {
       row.forEach((block, colIndex) => {
         if(block !== 0) {

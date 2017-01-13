@@ -1,23 +1,15 @@
-import * as PIXI from 'pixi.js';
 import {ASSETS} from './config.js';
 import {KeyboardManager} from './keyboard-manager.js';
 import {Playground} from './playground.js';
 import {TILE_SIZE} from './tiles/tile-data.js';
 import {PLAY_AREA, DEFAULT_SPEED} from './constants.js';
 import {PlayState} from './states/play.js';
+import {ENGINE} from './engine/engine.js';
 
 
 class Game {
   constructor(canvas) {
-    this.renderer = PIXI.autoDetectRenderer(960, 540, {
-      resolution: 1,
-      view: canvas
-    });
-
-    this.renderer.view.style.position = "absolute";
-    this.renderer.view.style.display = "block";
-    this.renderer.autoResize = true;
-    this.renderer.resize(window.innerWidth, window.innerHeight);
+    this.renderer = ENGINE.getRenderer(canvas, 960, 540);
   }
 
   run() {
@@ -25,20 +17,20 @@ class Game {
   }
 
   preload() {
-    PIXI.loader
-      .add(Object.values(ASSETS))
-      .load(() => {
+    ENGINE
+      .preload(Object.values(ASSETS))
+      .then(() => {
         this.setup();
       });
   }
 
   setup() {
     this.km = new KeyboardManager();
-    this.stage = new PIXI.Container();
+    this.stage = new ENGINE.Container();
     this.playground = new Playground(PLAY_AREA.ROWS, PLAY_AREA.COLS, TILE_SIZE);
-    this.ticker = new PIXI.ticker.Ticker();
+    this.ticker = new ENGINE.Ticker();
 
-    this.stage.addChild(this.playground);
+    this.stage.addChild(this.playground.container);
 
     this.states = {
       play: new PlayState(this.stage, this.playground)
@@ -51,7 +43,7 @@ class Game {
 
   setState(state) {
     this.currentState = state;
-    this.stage.addChild.apply(this.stage, this.currentState.renderables);
+    this.stage.addChild(...this.currentState.renderables);
 
     this.ticker.add(this.currentState.tick.bind(this.currentState));
 
@@ -75,7 +67,7 @@ class Game {
 
     this.currentState.loop();
 
-    this.renderer.render(this.stage);
+    this.renderer.render(this.stage.container);
   }
 }
 

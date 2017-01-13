@@ -11,7 +11,7 @@ class PlayState extends BaseState {
     this.stage = stage;
     this.playground = playground;
 
-    this.renderables.push(this.tile);
+    this.renderables.push(this.tile.container);
   }
 
   loop() {}
@@ -26,10 +26,10 @@ class PlayState extends BaseState {
       this.tile.moveDown();
     } else {
       this.playground.updateField(this.tile.shape, this.tile.pos);
-      this.stage.removeChild(this.tile);
+      this.stage.removeChild(this.tile.container);
       this.playground.checkForClearedLines();
       this.tile = this.tm.getRandomTile();
-      this.stage.addChild(this.tile);
+      this.stage.addChild(this.tile.container);
     }
   }
 
